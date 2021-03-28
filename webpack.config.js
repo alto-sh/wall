@@ -37,5 +37,11 @@ module.exports = {
         contentBase: resolve(__dirname, 'dist'),
         compress: true,
         port: 9000,
+        host: "0.0.0.0",
+        allowedHosts: [
+            ".repl.it",
+            ".repl.co",
+            ".repl.run"
+        ]
     }
 };
