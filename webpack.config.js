@@ -41,7 +41,8 @@ module.exports = {
         allowedHosts: [
             ".repl.it",
             ".repl.co",
-            ".repl.run"
+            ".repl.run",
+            ".ngrok.io"
         ]
     }
 };

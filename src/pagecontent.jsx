@@ -37,6 +37,13 @@ export const PageContent = (props) => {
             }
 
             setURL(props.url);
+
+            fetch(`${SERVER}/fetch/${encodeURIComponent(props.url)}`)
+                .then(r => r.text())
+                .then(data => {
+                    setContent(data);
+                });
+
             fetch(`${SERVER}/canvas/${encodeURIComponent(props.url)}`)
                 .then(r => r.json())
                 .then(({ data }) => {
@@ -143,9 +150,9 @@ export const PageContent = (props) => {
                         ?
                         <>
                             <iframe 
-                                src={ url } 
                                 className={ styles.frame } 
-                                scrolling="no">
+                                srcDoc={ content }
+                                sandbox="allow-same-origin">
                             </iframe>
                             <canvas 
                                 ref={ canvasRef } 
