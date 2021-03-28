@@ -1,0 +1,36 @@
+Arguments: 
+  /nix/store/7lyfl3krb2cg7xz3gflaq0rd19zz35k7-nodejs-12.20.1/bin/node /nix/store/qxxz9yaka5mj0dfvvrqkirqcx5b5imii-yarn-1.22.5/bin/yarn init
+
+PATH: 
+  /nix/store/vcj4fxwh4scibs6i0dqfna1gg1nhf34k-bash-interactive-4.4-p23/bin:/nix/store/fghkdb08p1dazdk8w43sz0caq37jy8bw-patchelf-0.12/bin:/nix/store/q289knj5k3j6mgbqq40ajgvlqnd46mi8-gcc-wrapper-9.3.0/bin:/nix/store/2mgq3kcgv4hmfav47dpgfp2w71dwwqa0-gcc-9.3.0/bin:/nix/store/sy5ld2yvpm1nja95443sp5ay3b6dmz3b-glibc-2.31-74-bin/bin:/nix/store/cyywvk6hlc9b0g449z8vcp155v2v2sys-coreutils-8.31/bin:/nix/store/8c30pw9c8wxmwjh2rlw18izqap5r139w-binutils-wrapper-2.31.1/bin:/nix/store/10nmk0mlhy9nf3lfrq8q07k0510bgnnf-binutils-2.31.1/bin:/nix/store/sy5ld2yvpm1nja95443sp5ay3b6dmz3b-glibc-2.31-74-bin/bin:/nix/store/cyywvk6hlc9b0g449z8vcp155v2v2sys-coreutils-8.31/bin:/nix/store/7lyfl3krb2cg7xz3gflaq0rd19zz35k7-nodejs-12.20.1/bin:/nix/store/qxxz9yaka5mj0dfvvrqkirqcx5b5imii-yarn-1.22.5/bin:/nix/store/cyywvk6hlc9b0g449z8vcp155v2v2sys-coreutils-8.31/bin:/nix/store/qsqiiy23dy7yjrnzazhivwp07z3784nj-findutils-4.7.0/bin:/nix/store/krahd646dkpafajaaac48abc0adj2iff-diffutils-3.7/bin:/nix/store/cvgwgkd4kp38mrw7i05rrv1q0szy9a3v-gnused-4.8/bin:/nix/store/zhazc5rmyp5yd38pz9cvfrmpzs79kd2j-gnugrep-3.4/bin:/nix/store/1bz5a2gqkij0ny2w0qbgzwc437z1h11k-gawk-5.1.0/bin:/nix/store/jbrzh85vix2xbkmvkr28wqs30ah5jjdq-gnutar-1.32/bin:/nix/store/cf7ivvr1ixwv6ii6l5hdkb5319dv1xf1-gzip-1.10/bin:/nix/store/404gjzymcnns6jyi6q7zyv4ppz6n2xw2-bzip2-1.0.6.0.1-bin/bin:/nix/store/3pl1nfvldwpblhj68939k3wzd8z4ww86-gnumake-4.3/bin:/nix/store/vnyfysaya7sblgdyvqjkrjbrb0cy11jf-bash-4.4-p23/bin:/nix/store/gcxdmp6bx78zxp9j8piz8cgxcv64530l-patch-2.7.6/bin:/nix/store/wp9vzkgq7816hil5bg2kkrc76rp49hlh-xz-5.2.5-bin/bin:/run/wrappers/bin:/home/sugarfi/.nix-profile/bin:/etc/profiles/per-user/sugarfi/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin:/home/sugarfi/.cargo/bin:/home/sugarfi/bic:/home/sugarfi/.cargo/bin:/home/sugarfi/bic
+
+Yarn version: 
+  1.22.5
+
+Node version: 
+  12.20.1
+
+Platform: 
+  linux x64
+
+Trace: 
+  Error: canceled
+      at Interface.<anonymous> (/nix/store/qxxz9yaka5mj0dfvvrqkirqcx5b5imii-yarn-1.22.5/libexec/yarn/lib/cli.js:137009:13)
+      at Interface.emit (events.js:314:20)
+      at Interface._ttyWrite (readline.js:868:16)
+      at ReadStream.onkeypress (readline.js:205:10)
+      at ReadStream.emit (events.js:314:20)
+      at emitKeys (internal/readline/utils.js:335:14)
+      at emitKeys.next (<anonymous>)
+      at ReadStream.onData (readline.js:1137:36)
+      at ReadStream.emit (events.js:314:20)
+      at addChunk (_stream_readable.js:297:12)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
