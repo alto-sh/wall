@@ -20,35 +20,48 @@ export const PageContent = (props) => {
     const [ dataUrl, setDataUrl ] = React.useState(null);
     const [ tool, setTool ] = React.useState('spraycan');
     const [ message, setMessage ] = React.useState(null);
+    const [ history, setHistory ] = React.useState([]);
 
     const canvasRef = React.useRef(null);
+
+    const loadHistory = () => {
+        fetch(`${SERVER}/history`)
+            .then(r => r.json())
+            .then(json => {
+                setHistory(json.data);
+            });
+    }
+
+    React.useEffect(loadHistory, []);
+
+    const loadURL = (load) => {
+        if (url) {
+            socket.emit('sync-dataurl', { url, data: canvasRef.current.toDataURL() });
+        }
+
+        if (ctx && canvasRef.current) {
+            ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        }
+
+        setURL(load);
+
+        fetch(`${SERVER}/fetch/${encodeURIComponent(load)}`)
+            .then(r => r.text())
+            .then(data => {
+                setContent(data);
+            });
+
+        fetch(`${SERVER}/canvas/${encodeURIComponent(load)}`)
+            .then(r => r.json())
+            .then(({ data }) => {
+                setDataUrl(data);
+            });
+    };
     
     React.useEffect(() => {
-
         if (props.url == '' || props.url.match(URL)) {
             setMessage(null);
-
-            if (url) {
-                socket.emit('sync-dataurl', { url, data: canvasRef.current.toDataURL() });
-            }
-
-            if (ctx) {
-                ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-            }
-
-            setURL(props.url);
-
-            fetch(`${SERVER}/fetch/${encodeURIComponent(props.url)}`)
-                .then(r => r.text())
-                .then(data => {
-                    setContent(data);
-                });
-
-            fetch(`${SERVER}/canvas/${encodeURIComponent(props.url)}`)
-                .then(r => r.json())
-                .then(({ data }) => {
-                    setDataUrl(data);
-                });
+            loadURL(props.url);
         } else {
             setMessage('Invalid URL.');
             return;
@@ -137,6 +150,23 @@ export const PageContent = (props) => {
         setY(y2);
     };
 
+    const goTo = (to) => {
+        if (to.match(URL)) {
+            fetch(`${SERVER}/history/add`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    url: to
+                })
+            });
+            console.log(to);
+            setURL(to);
+            loadURL(to);
+        }
+    };
+
     return (
         <div className={ styles.container }>
             {
@@ -167,12 +197,44 @@ export const PageContent = (props) => {
                             <div className={ styles.tools }>
                                 <button onClick={ () => setTool('spraycan') }>Spray can</button>
                                 <button onClick={ () => setTool('eraser') }>Eraser</button>
-                                <button onClick={ () => setURL(null) }>Back to home</button>
+                                <button onClick={ () => {
+                                    setURL(null);
+                                    loadHistory();
+                                } }>Back to home</button>
                             </div>
                         </>
                         :
                         <div className={ styles.placeholder }>
-                            { props.children }
+                            <h1>wall</h1>
+                            <h2>graffiti the web</h2>
+                            <p>
+                                the modern web has strict protections on websites,
+                                their content, and who can modify them. this project
+                                aims to reimagine that, by allowing users to graffiti
+                                web pages and have their changes be reflected for anyone viewing
+                                the page. other users can add their own graffiti, or they
+                                can clean yours off. sound interesting? enter a url above and 
+                                get started. don't want to do that? you can find a list of 
+                                recently-graffitied pages below.
+                            </p>
+                            <p>
+                                note that this site is still in beta, and there may be bugs.
+                                for one thing: many sites won't be able to display here, because
+                                of cors and whatnot. this should be fixed as soon as possible,
+                                but in the meantime just find a site where it doesn't matter.
+                            </p>
+                            <h3>recently visited pages</h3>
+                            <ul>
+                                {
+                                    history.map((item, index) => {
+                                        return (
+                                            <li key={ index }>
+                                                <a onClick={ () => goTo(item) }>{ item }</a>
+                                            </li>
+                                        );
+                                    })
+                                }
+                            </ul>
                         </div>
             }
         </div>
