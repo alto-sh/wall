@@ -1,3 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Recursive&display=swap')
+@import "config.sass"
+
+/*
+ *.tabs
+ *   display: grid
+ *   grid-template-columns: repeat(6, 1fr)
+ *   font-family: 'Recursive', sans-serif
+ *   //padding: 0 $x_padding
+ *   padding-top: 4px
+ *
+ *   b
+ *       border-bottom: 1px solid black
+ *   
+ *   div
+ *       border-radius: 5px 5px 0 0
+ *       display: flex
+ *       justify-content: center
+ *       align-items: center
+ *       position: relative
+ *
+ *       &.active
+ *           border-bottom-color: transparent
+ */
+
+
 .searchbar
     display: grid
     grid-template-columns: 1fr 100px
+    //border: 1px solid black
+    //border-top: none
+
+    input, button
+        border-radius: 0
+
+    button
+        border: none
+        outline: none
+
+    input
+        //border: 1px solid black
+        outline: none
+        margin: 4px
+        padding: 0 5px
+        border-radius: 3px 3px
+
+    *, input, button
+        font-family: 'Recursive', sans-serif

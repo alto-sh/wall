@@ -16,7 +16,6 @@ export const PageContent = (props) => {
     const [ x, setX ] = React.useState(0);
     const [ y, setY ] = React.useState(0);
     const [ ctx, setCtx ] = React.useState(null);
-    const [ timer, setTimer ] = React.useState(null);
     const [ dataUrl, setDataUrl ] = React.useState(null);
     const [ tool, setTool ] = React.useState('spraycan');
     const [ message, setMessage ] = React.useState(null);
@@ -36,7 +35,7 @@ export const PageContent = (props) => {
 
     const loadURL = (load) => {
         if (url) {
-            socket.emit('sync-dataurl', { url, data: canvasRef.current.toDataURL() });
+            //socket.emit('sync-dataurl', { url, data: canvasRef.current.toDataURL() });
         }
 
         if (ctx && canvasRef.current) {
@@ -45,17 +44,19 @@ export const PageContent = (props) => {
 
         setURL(load);
 
-        fetch(`${SERVER}/fetch/${encodeURIComponent(load)}`)
-            .then(r => r.text())
-            .then(data => {
-                setContent(data);
-            });
+        if (load) {
+            fetch(`${SERVER}/fetch/${encodeURIComponent(load)}`)
+                .then(r => r.text())
+                .then(data => {
+                    setContent(data);
+                });
 
-        fetch(`${SERVER}/canvas/${encodeURIComponent(load)}`)
-            .then(r => r.json())
-            .then(({ data }) => {
-                setDataUrl(data);
-            });
+            fetch(`${SERVER}/canvas/${encodeURIComponent(load)}`)
+                .then(r => r.json())
+                .then(({ data }) => {
+                    setDataUrl(data);
+                });
+        }
     };
     
     React.useEffect(() => {
@@ -162,7 +163,6 @@ export const PageContent = (props) => {
                 })
             });
             console.log(to);
-            setURL(to);
             loadURL(to);
         }
     };
@@ -182,14 +182,14 @@ export const PageContent = (props) => {
                             <iframe 
                                 className={ styles.frame } 
                                 srcDoc={ content }
-                                sandbox="allow-same-origin">
+                                scrolling="no"
+                                sandbox="allow-scripts allow-same-origin">
                             </iframe>
                             <canvas 
                                 ref={ canvasRef } 
                                 className={ styles.canvas } 
                                 onMouseDown={ handleMouseDown }
                                 onMouseUp={ (e) => {
-                                    clearTimeout(timer);
                                     setMouse(false);
                                 } } 
                                 onMouseMove={ handleMouseMove }>
@@ -199,7 +199,6 @@ export const PageContent = (props) => {
                                 <button onClick={ () => setTool('eraser') }>Eraser</button>
                                 <button onClick={ () => {
                                     setURL(null);
-                                    loadHistory();
                                 } }>Back to home</button>
                             </div>
                         </>
@@ -217,22 +216,22 @@ export const PageContent = (props) => {
                                 get started. don't want to do that? you can find a list of 
                                 recently-graffitied pages below.
                             </p>
-                            <p>
-                                note that this site is still in beta, and there may be bugs.
-                                for one thing: many sites won't be able to display here, because
-                                of cors and whatnot. this should be fixed as soon as possible,
-                                but in the meantime just find a site where it doesn't matter.
-                            </p>
                             <h3>recently visited pages</h3>
                             <ul>
                                 {
-                                    history.map((item, index) => {
-                                        return (
-                                            <li key={ index }>
-                                                <a onClick={ () => goTo(item) }>{ item }</a>
-                                            </li>
-                                        );
-                                    })
+                                    history.length == 0 
+                                        ?
+                                        <span>
+                                            no items yet :(
+                                        </span>
+                                        :
+                                        history.map((item, index) => {
+                                            return (
+                                                <li key={ index }>
+                                                    <a onClick={ () => goTo(item) }>{ item }</a>
+                                                </li>
+                                            );
+                                        })
                                 }
                             </ul>
                         </div>

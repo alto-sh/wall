@@ -25,6 +25,19 @@ module.exports = {
                     'css-loader',
                     'sass-loader'
                 ]
+            },
+            {
+                test: /\.css$/,
+                use: [
+                    'style-loader',
+                    'css-loader'
+                ]
+            },
+            {
+                test: /\.woff2?$/,
+                use: [
+                    'file-loader'
+                ]
             }
         ]
     },

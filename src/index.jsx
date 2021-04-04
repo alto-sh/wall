@@ -26,9 +26,21 @@ const App = (props) => {
     };
 
     return (
-        <div className={ styles.main }>
-            <SearchBar onSearch={ goTo } />
-            <PageContent url={ url } />
+        <div className={`window ${styles.main}`}>
+            <div className="title-bar">
+                <div className="title-bar-text">
+                    wall - Microsovt Internet Explorer
+                </div>
+                <div className="title-bar-controls">
+                    <button aria-label="Minimize"></button>
+                    <button aria-label="Maximize"></button>
+                    <button aria-label="Close"></button>
+                </div>
+            </div>
+            <div className={`window-body ${styles.body}`}>
+                <SearchBar onSearch={ goTo } />
+                <PageContent url={ url } />
+            </div>
         </div>
     );
 };
